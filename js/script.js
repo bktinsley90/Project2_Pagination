@@ -2,62 +2,68 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
+//declaring global variables, grabbing from the HTML
+let studentItem = document.querySelectorAll(".student-item");
+console.log(studentItem)
+const studentsPerPage = 10;
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-let list = document.querySelectorAll(".student-item") 
-//console.log(list)
-let studentsPerPage = list.length /10;
-//console.log(studentsPerPage)
+//list is the students array , page is the number per page
+function showPage(list, page) {
+   let startIndex = (page * studentsPerPage) - studentsPerPage;
+   let lastIndex = page * studentsPerPage;
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
-const showPage = (list, page) => {
-   /*Loop over items in the list paramete
-      if the index of a list item is >= the index of the first item that should be shown on the page
-      && the list item index is <= the index of the last item that should be shown on the page, show it*/
-      
-      for(let i = 0; i < list.length; i++){
-         if((list[i] >= something) && (list[i] <= something)){
-        //show it
-         }
-          
+   //Loop over items in the list parameter
+   for (let i = 0; i < list.length; i++) {
+      /* if the index of a list item is >= the index of the first item that should be shown on the page
+   && the list item index is <= the index of the last item that should be shown on the page,*/
+      if (i >= startIndex && i < lastIndex) {
+         list[i].style.display = 'block';
+      } else {
+         list[i].style.display = 'none';
       }
+
+   }
 }
 
 
+// showPage(studentItem, 1)
 
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
+const appendPageLinks = (list) => {
+   // Determine how many pages are needed for the list by dividing the total number of list items by the max number of items
+   let numOfStudents = list.length;
+   let total = Math.ceil(numOfStudents / studentsPerPage);
+   // create a div, give it the "pagination" class and append to .page div
+   let newDiv = document.createElement('div');
+   newDiv.className = 'pagination';
+   let pageDiv = document.querySelector('.page')
+   pageDiv.appendChild(newDiv);
 
-
-
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+   // add a ul to the pagination div to store the pagination
+   let newUl = document.createElement('ul')
+   newDiv.appendChild(newUl)
+   let linklist = document.getElementsByTagName('a');
+   //for every page, add li and a tags with the page number text
+   for (let i = 0; i < total; i++) {
+      let li = document.createElement('li');
+      let link = document.createElement('a');
+      newUl.appendChild(li);
+   
+      link.href = '#';
+      link.textContent = i + 1;
+      li.appendChild(link);
+      
+      // add an event listener to each a tag. when they are clicked call the showpage function to display the appropriate page
+      link.addEventListener('click', (e) => {
+         for(let i = 0; i < linklist.length; i++){
+            linklist[i].className = '';
+            e.target.className = 'active';
+         }
+          showPage(studentItem, i);
+      });
+   }
+      linklist[0].className = 'active';
+}
+showPage(studentItem, 1);
+appendPageLinks(studentItem)
