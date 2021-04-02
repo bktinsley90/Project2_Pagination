@@ -6,3 +6,5 @@ This is Techdegree's second project. This project is a single page that displays
 Javascript
 HTML/CSS
 
+# Updates
+4/2/21 played with the css a little bit
