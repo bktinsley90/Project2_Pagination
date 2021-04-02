@@ -1,11 +1,5 @@
-/******************************************
-Treehouse Techdegree:
-FSJS project 2 - List Filter and Pagination
-******************************************/
-
 //declaring global variables, grabbing from the HTML
 let studentItem = document.querySelectorAll(".student-item");
-console.log(studentItem)
 const studentsPerPage = 10;
 
 //Extra Credit
@@ -27,17 +21,13 @@ searchDiv.appendChild(btn);
 
 //when the search button is clicked filter by student name
 btn.addEventListener('click', (e) => {
-   e.preventDefault();
    let searchValue = input.value;
-   console.log(searchValue)
    searchItem(studentItem, searchValue);
 
 })
 //add a keyup eventlistener so as the person types it should search
 input.addEventListener('keyup', (e) => {
-   e.preventDefault();
    let searchValue = input.value;
-   console.log(searchValue)
    searchItem(studentItem, searchValue);
 
 })
@@ -83,8 +73,6 @@ function showPage(list, page) {
 
    //Loop over items in the list parameter
    for (let i = 0; i < list.length; i++) {
-      /* if the index of a list item is >= the index of the first item that should be shown on the page
-   && the list item index is <= the index of the last item that should be shown on the page,*/
       if (i >= startIndex && i < lastIndex) {
          list[i].style.display = 'block';
       } else {
@@ -95,7 +83,7 @@ function showPage(list, page) {
 }
 
 
-// showPage(studentItem, 1)
+//Pagination 
 
 const appendPageLinks = (list) => {
    // Determine how many pages are needed for the list by dividing the total number of list items by the max number of items
